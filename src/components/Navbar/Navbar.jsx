@@ -1,6 +1,7 @@
 import "./Navbar.css";
 import { useEffect, useState } from "react";
-import { Menu, X, Moon } from "lucide-react";
+import { Menu, X, Moon, Sun } from "lucide-react";
+import { useTheme } from "../../context/ThemeContext";
 
 const NAV_LINKS = [
   { label: "About", href: "#about" },
@@ -14,6 +15,9 @@ const NAV_LINKS = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [bearHover, setBearHover] = useState(false);
+
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,16 +33,18 @@ export default function Navbar() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 flex justify-center px-6 pt-5">
       <nav
-        className={`navbar ${
-          scrolled ? "navbar-scrolled" : "navbar-glass"
-        } flex w-full max-w-7xl items-center justify-between px-7 py-3`}
+        className={`navbar ${scrolled ? "navbar-scrolled" : "navbar-glass"
+          } flex w-full max-w-7xl items-center justify-between px-7 py-3`}
       >
 
         {/* Logo*/}
-        <a href="#top"
-          className="logo text-lg font-semibold tracking-wide"
+        <a
+          href="#top"
+          className="logo"
+          onMouseEnter={() => setBearHover(true)}
+          onMouseLeave={() => setBearHover(false)}
         >
-          ʕっ•ᴥ•ʔっ
+          ʕっ{bearHover ? "◕ᴥ◕" : "•ᴥ•"}ʔっ
         </a>
 
         {/* Desktop Menu */}
@@ -58,20 +64,26 @@ export default function Navbar() {
         {/* Right Side */}
         <div className="flex items-center gap-3">
 
-          {/* Theme Toggle (sementara dummy) */}
+          {/* Theme Toggle */}
           <button
+            onClick={toggleTheme}
             className="
-            theme-btn
-            hidden
-            md:flex
-            h-10
-            w-10
-            items-center
-            justify-center
-            rounded-full
+              theme-btn
+              hidden
+              md:flex
+              h-10
+              w-10
+              items-center
+              justify-center
+              rounded-full
             "
+            aria-label="Toggle Theme"
           >
-            <Moon size={18} />
+            {theme === "dark" ? (
+              <Sun size={18} />
+            ) : (
+              <Moon size={18} />
+            )}
           </button>
 
           {/* Mobile Menu */}
@@ -98,25 +110,26 @@ export default function Navbar() {
         {mobileOpen && (
           <div
             className="
-            md:hidden
-            border-t
-            border-blue-400/10
-            bg-[#050812]/95
-            backdrop-blur-xl
+              absolute
+              top-[82px]
+              left-1/2
+              -translate-x-1/2
+
+              w-[92%]
+              max-w-sm
+
+              md:hidden
+              mobile-menu
             "
           >
-            <div className="flex flex-col gap-5 px-8 py-6">
+            <div className="flex flex-col py-3">
 
               {NAV_LINKS.map((item) => (
                 <a
                   key={item.href}
                   href={item.href}
                   onClick={() => setMobileOpen(false)}
-                  className="
-                  text-slate-300
-                  transition-colors
-                  hover:text-blue-400
-                  "
+                  className="mobile-link"
                 >
                   {item.label}
                 </a>

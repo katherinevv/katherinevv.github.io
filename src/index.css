@@ -6,23 +6,29 @@
 ========================= */
 
 :root {
-  /* Light Mode */
-  --bg: #f8fafc;
-  --card: #ffffff;
-  --primary: #3b82f6;
-  --text: #0f172a;
-  --text-secondary: #64748b;
-  --border: rgba(15, 23, 42, 0.08);
+  --transition: .35s ease;
 }
 
-.dark {
-  /* Dark Mode */
+/* DARK */
+[data-theme="dark"] {
   --bg: #050812;
   --card: #162142;
-  --primary: #3b82f6;
-  --text: #ffffff;
-  --text-secondary: #8f94a6;
-  --border: rgba(148, 163, 184, 0.1);
+  --primary: #3A7AFF;
+  --text: #FFFFFF;
+  --text-secondary: #8F94A6;
+  --border: rgba(255,255,255,.08);
+  --shadow:rgba(0,0,0,.35);
+}
+
+/* LIGHT */
+[data-theme="light"] {
+  --bg: #F6F9FD;
+  --card: #FFFFFF;
+  --primary: #3A7AFF;
+  --text: #111827;
+  --text-secondary: #5B6478;
+  --border: rgba(0,0,0,.08);
+  --shadow: rgba(15,23,42,.10);
 }
 
 /* =========================
@@ -34,6 +40,11 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+
+    transition:
+        background-color .35s ease,
+        border-color .35s ease,
+        color .35s ease;
   }
 
   html {
@@ -61,8 +72,8 @@
     background-attachment: fixed;
 
     transition:
-      background-color .4s ease,
-      color .4s ease;
+      background-color .45s ease,
+      color .45s ease;
   }
 
   a {
