@@ -16,8 +16,17 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [bearHover, setBearHover] = useState(false);
-
   const { theme, toggleTheme } = useTheme();
+
+  const handleThemeToggle = () => {
+    document.documentElement.classList.add("theme-switching");
+
+    toggleTheme();
+
+    setTimeout(() => {
+      document.documentElement.classList.remove("theme-switching");
+    }, 450);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -66,7 +75,7 @@ export default function Navbar() {
 
           {/* Theme Toggle */}
           <button
-            onClick={toggleTheme}
+            onClick={handleThemeToggle}
             className="
               theme-btn
               hidden
@@ -135,6 +144,27 @@ export default function Navbar() {
                 </a>
               ))}
 
+              <div className="mobile-menu-divider" />
+              
+              <button
+                onClick={() => {
+                  handleThemeToggle();
+                  setMobileOpen(false);
+                }}
+                className="mobile-link mobile-theme-toggle"
+              >
+                {theme === "dark" ? (
+                  <>
+                    <Sun size={18} />
+                    <span>Light Mode</span>
+                  </>
+                ) : (
+                  <>
+                    <Moon size={18} />
+                    <span>Dark Mode</span>
+                  </>
+                )}
+              </button>
             </div>
           </div>
         )}

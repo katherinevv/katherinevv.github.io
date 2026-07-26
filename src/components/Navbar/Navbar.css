@@ -1,15 +1,11 @@
 /* Floating Navbar */
 .navbar {
-    transition:
-        background-color .35s ease,
-        border-color .35s ease,
-        box-shadow .35s ease;
+    border-radius: 999px;
 }
 
 .navbar-glass {
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border-radius: 999px;
     border: 1px solid var(--border);
     background: color-mix(in srgb, var(--card) 72%, transparent);
     box-shadow: 0 12px 40px var(--shadow);
@@ -123,6 +119,23 @@
 .mobile-link:hover{
     background:color-mix(in srgb, var(--primary) 10%, transparent);
     color:var(--primary);
+}
+
+.mobile-menu-divider {
+    height: 1px;
+    background: var(--border);
+    margin: .4rem 1rem;
+}
+
+.mobile-theme-toggle {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    cursor: pointer;
 }
 
 /* Animation */

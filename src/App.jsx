@@ -1,6 +1,16 @@
+import useScrollFade from "./hooks/useScrollFade";
+
 import Navbar from "./components/Navbar/Navbar";
+import Hero from "./components/Hero/Hero";
 
 function App() {
+  const [aboutRef, aboutVisible] = useScrollFade();
+  const [experienceRef, experienceVisible] = useScrollFade();
+  const [projectsRef, projectsVisible] = useScrollFade();
+  const [researchRef, researchVisible] = useScrollFade();
+  const [skillsRef, skillsVisible] = useScrollFade();
+  const [contactRef, contactVisible] = useScrollFade();
+
   return (
     <>
       {/* Background Layer */}
@@ -44,22 +54,42 @@ function App() {
       </div>
 
       {/* Website */}
-      <main className="relative min-h-screen bg-transparent text-[color:var(--text)] transition-colors duration-500">
+      <main className="relative min-h-screen bg-transparent text-[color:var(--text)]">
+        <div className="navbar-fade-overlay" aria-hidden="true"></div>
         <Navbar />
 
         {/* Hero */}
+        <Hero />
 
         {/* About */}
+        <div ref={aboutRef} className={`fade-section ${aboutVisible ? "is-visible" : ""}`}>
+          {/* <About /> */}
+        </div>
 
         {/* Experience */}
+        <div ref={experienceRef} className={`fade-section ${experienceVisible ? "is-visible" : ""}`}>
+          {/* <Experience /> */}
+        </div>
 
         {/* Projects */}
+        <div ref={projectsRef} className={`fade-section ${projectsVisible ? "is-visible" : ""}`}>
+          {/* <Projects /> */}
+        </div>
 
         {/* Research */}
+        <div ref={researchRef} className={`fade-section ${researchVisible ? "is-visible" : ""}`}>
+          {/* <Research /> */}
+        </div>
 
         {/* Skills */}
+        <div ref={skillsRef} className={`fade-section ${skillsVisible ? "is-visible" : ""}`}>
+          {/* <Skills /> */}
+        </div>
 
         {/* Contact */}
+        <div ref={contactRef} className={`fade-section ${contactVisible ? "is-visible" : ""}`}>
+          {/* <Contact /> */}
+        </div>
 
         {/* Footer */}
       </main>
