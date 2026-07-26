@@ -39,7 +39,7 @@ export default function Hero() {
                     </div>
 
                     <p className="hero-role"> 
-                        Computer Science Graduate <span className="dot-sep">•</span> GPA 3.78/4.00 
+                        Computer Science Graduate 
                     </p>
 
                     <p className="hero-description">

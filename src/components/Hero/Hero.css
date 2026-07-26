@@ -99,12 +99,6 @@
     color: var(--text);
 }
 
-.dot-sep {
-    color: var(--text-secondary);
-    margin: 0 .4rem;
-    opacity: .5;
-}
-
 .hero-description {
     max-width: 480px;
     line-height: 1.6;

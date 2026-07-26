@@ -1,0 +1,81 @@
+.stats-section {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 2.2rem 0;
+}
+
+.stats-container {
+    width: min(1100px, 90%);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.stats-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: .3rem;
+    text-align: center;
+    padding: 0 1rem;
+    position: relative;
+}
+
+/* Vertical divider between items */
+.stats-item:not(:first-child)::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 10%;
+    bottom: 10%;
+    width: 1px;
+    background: var(--border);
+}
+
+.stats-value {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 800;
+    color: var(--primary);
+    line-height: 1;
+}
+
+.stats-label {
+    font-size: .85rem;
+    color: var(--text-secondary);
+    letter-spacing: .02em;
+}
+
+/* MOBILE */
+@media (max-width: 640px) {
+    .stats-container {
+        grid-template-columns: repeat(2, 1fr);
+        row-gap: 1.6rem;
+    }
+
+    /* re-do dividers: vertical only on odd items, horizontal for row break */
+    .stats-item:not(:first-child)::before {
+        display: none;
+    }
+
+    .stats-item:nth-child(odd)::before {
+        content: "";
+        display: block;
+        position: absolute;
+        right: 0;
+        top: 10%;
+        bottom: 10%;
+        width: 1px;
+        background: var(--border);
+    }
+
+    .stats-item:nth-child(n+3)::after {
+        content: "";
+        position: absolute;
+        top: -0.8rem;
+        left: 15%;
+        right: 15%;
+        height: 1px;
+        background: var(--border);
+    }
+}

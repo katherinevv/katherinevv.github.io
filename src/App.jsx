@@ -2,6 +2,7 @@ import useScrollFade from "./hooks/useScrollFade";
 
 import Navbar from "./components/Navbar/Navbar";
 import Hero from "./components/Hero/Hero";
+import Stats from "./components/Stats/Stats";
 
 function App() {
   const [aboutRef, aboutVisible] = useScrollFade();
@@ -60,6 +61,9 @@ function App() {
 
         {/* Hero */}
         <Hero />
+        
+        {/* Stats */}
+        <Stats />
 
         {/* About */}
         <div ref={aboutRef} className={`fade-section ${aboutVisible ? "is-visible" : ""}`}>
