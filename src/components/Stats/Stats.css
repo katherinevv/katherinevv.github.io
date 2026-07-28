@@ -46,7 +46,7 @@
     letter-spacing: .02em;
 }
 
-/* MOBILE */
+/* RESPONSIVE */
 @media (max-width: 640px) {
     .stats-container {
         grid-template-columns: repeat(2, 1fr);

@@ -1,8 +1,10 @@
 import useScrollFade from "./hooks/useScrollFade";
+import FlyingBear from "./FlyingBear";
 
 import Navbar from "./components/Navbar/Navbar";
 import Hero from "./components/Hero/Hero";
 import Stats from "./components/Stats/Stats";
+import About from "./components/About/About";
 
 function App() {
   const [aboutRef, aboutVisible] = useScrollFade();
@@ -56,6 +58,9 @@ function App() {
 
       {/* Website */}
       <main className="relative min-h-screen bg-transparent text-[color:var(--text)]">
+        <FlyingBear />
+        
+        {/* Navbar */}
         <div className="navbar-fade-overlay" aria-hidden="true"></div>
         <Navbar />
 
@@ -67,7 +72,7 @@ function App() {
 
         {/* About */}
         <div ref={aboutRef} className={`fade-section ${aboutVisible ? "is-visible" : ""}`}>
-          {/* <About /> */}
+          <About />
         </div>
 
         {/* Experience */}
