@@ -1,5 +1,5 @@
 import "./About.css";
-import { GraduationCap, Briefcase, Target } from "lucide-react";
+import { GraduationCap, Briefcase, Sparkles } from "lucide-react";
 
 import BINUS from "../../assets/images/Logo/logo-BINUS.png";
 import AAB from "../../assets/images/Logo/logo-AAB.png";
@@ -32,8 +32,9 @@ export default function About() {
                         </p>
 
                         <p className="about-text">
-                            Today, I'm pursuing opportunities
-                            where I can bridge technology, business, and people.
+                            Today, I'm pursuing opportunities in Business Analysis, Project Management,
+                            and Technology Consulting, where I can bridge business needs with technology
+                            to deliver meaningful digital solutions.
                         </p>
                     </div>
 
@@ -76,14 +77,41 @@ export default function About() {
                         <div className="about-card about-card--roles">
                             <div className="about-card-content">
                                 <div className="about-card-icon">
-                                    <Target size={22} />
+                                    <Sparkles size={22} />
                                 </div>
-                                <p className="about-card-title">Open to Roles In</p>
-                                <div className="about-role-list">
-                                    <p className="about-role-item">Business Analyst</p>
-                                    <p className="about-role-item">Project Manager</p>
-                                    <p className="about-role-item">Technical Consultant</p>
-                                    <p className="about-role-item">IT Procurement</p>
+                                <p className="about-card-title">Beyond Academics</p>
+                                <div className="about-highlight-list">
+                                    <div className="about-highlight-item">
+                                        <span className="about-highlight-emoji">👥</span>
+                                        <div className="about-highlight-text">
+                                            <p className="about-highlight-main">Project Leader</p>
+                                            <p className="about-highlight-sub">Software Engineering Project</p>
+                                        </div>
+                                    </div>
+
+                                    <div className="about-highlight-item">
+                                        <span className="about-highlight-emoji">🏆</span>
+                                        <div className="about-highlight-text">
+                                            <p className="about-highlight-main">IEEE ICITDA 2024</p>
+                                            <p className="about-highlight-sub">Conference Author</p>
+                                        </div>
+                                    </div>
+
+                                    <div className="about-highlight-item">
+                                        <span className="about-highlight-emoji">💻</span>
+                                        <div className="about-highlight-text">
+                                            <p className="about-highlight-main">Back-End Developer</p>
+                                            <p className="about-highlight-sub">BNCC</p>
+                                        </div>
+                                    </div>
+
+                                    <div className="about-highlight-item">
+                                        <span className="about-highlight-emoji">🎨</span>
+                                        <div className="about-highlight-text">
+                                            <p className="about-highlight-main">Creative Division</p>
+                                            <p className="about-highlight-sub">Data Science Club</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 

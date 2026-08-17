@@ -1,6 +1,7 @@
 import "./Navbar.css";
 import { useEffect, useState } from "react";
 import { Menu, X, Moon, Sun } from "lucide-react";
+
 import { useTheme } from "../../context/ThemeContext";
 
 const NAV_LINKS = [
