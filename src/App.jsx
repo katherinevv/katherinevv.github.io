@@ -6,11 +6,12 @@ import Hero from "./components/Hero/Hero";
 import Stats from "./components/Stats/Stats";
 import About from "./components/About/About";
 import Experience from "./components/Experience/Experience";
+import Projects from "./components/Projects/Projects";
 
 function App() {
   const [aboutRef, aboutVisible] = useScrollFade();
   const [experienceRef, experienceVisible] = useScrollFade();
-  const [projectsRef, projectsVisible] = useScrollFade();
+  const [projectsRef, projectsVisible] = useScrollFade({threshold: 0.05, rootMargin: "0px 0px -40px 0px",});
   const [researchRef, researchVisible] = useScrollFade();
   const [skillsRef, skillsVisible] = useScrollFade();
   const [contactRef, contactVisible] = useScrollFade();
@@ -60,14 +61,14 @@ function App() {
       {/* Website */}
       <main className="relative min-h-screen bg-transparent text-[color:var(--text)]">
         <FlyingBear />
-        
+
         {/* Navbar */}
         <div className="navbar-fade-overlay" aria-hidden="true"></div>
         <Navbar />
 
         {/* Hero */}
         <Hero />
-        
+
         {/* Stats */}
         <Stats />
 
@@ -82,8 +83,8 @@ function App() {
         </div>
 
         {/* Projects */}
-        <div ref={projectsRef} className={`fade-section ${projectsVisible ? "is-visible" : ""}`}>
-          {/* <Projects /> */}
+        <div ref={projectsRef} className={`projects-fade-section ${projectsVisible ? "is-visible" : ""}`}>
+          <Projects />
         </div>
 
         {/* Research */}

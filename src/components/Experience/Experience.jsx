@@ -25,23 +25,9 @@ const EXPERIENCES = [
         ],
         techStack: ["Laravel", "C# (.NET)", "MySQL", "SQL Server", "PostgreSQL", "Bitbucket", "Jira", "Swagger"],
     },
-    {
-        // Future Experience
-        role: "Application Developer Intern",
-        company: "PT Asuransi Astra Buana",
-        period: "Mar 2025 – Feb 2026",
-        image: AABLogo,
-        buildingImage: AABBuilding,
-        bullets: [
-            <>Enhanced features within the internal{" "} <Highlight>Vendor Management System (VMS)</Highlight>, improving vendor management workflows and overall operational efficiency.</>,
-            <>Developed RESTful APIs for{" "} <Highlight>MyGarda × Medcare</Highlight>, enabling mobile integration and supporting user-facing digital healthcare services.</>,
-            <>Built a{" "} <Highlight>Centralized Push Notification Service</Highlight>, standardizing notification delivery across multiple applications and improving backend maintainability.</>,
-            <>Developed{" "} <Highlight>scheduler</Highlight> and {" "} <Highlight>automation services</Highlight> for <Highlight>Partnership Products</Highlight>, streamlining high-volume request processing and reducing manual operational workloads.</>,
-            <>Improved application maintainability through {" "} <Highlight>framework upgrades</Highlight>, {" "} <Highlight>API documentation</Highlight>, and {" "} <Highlight>database performance optimization</Highlight> to increase system maintainability.</>,
-            <>Collaborated with{" "} <Highlight> Business Analysts</Highlight>, {" "} <Highlight>QC</Highlight>, and{" "} <Highlight> stakeholders</Highlight> in a{" "} <Highlight>Scrum</Highlight> environment to translate business requirements into reliable digital solutions.</>,
-        ],
-        techStack: ["Laravel", "C# (.NET)", "MySQL", "SQL Server", "PostgreSQL", "Git", "Jira", "Swagger"],
-    },
+    
+    // Future Experience
+
 ];
 
 function ExperienceItem({ data, index, open, onToggle, dotRefs }) {

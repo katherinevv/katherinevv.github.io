@@ -148,6 +148,17 @@ main {
     transform: translateY(0);
 }
 
+.projects-fade-section {
+  opacity: 0;
+
+  transition:
+    opacity 0.75s cubic-bezier(.22, 1, .36, 1);
+}
+
+.projects-fade-section.is-visible {
+  opacity: 1;
+}
+
 /* =========================
     NAVBAR 
 ========================= */
