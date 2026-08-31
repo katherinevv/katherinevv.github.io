@@ -7,7 +7,7 @@ const DURATION = 900;
 const DEBUG = false;
 const STAGE_LINE = 0.52;
 
-const STAGES = ["hero", "about", "experience", "projects", "research"];
+const STAGES = ["hero", "about", "experience", "projects", "research", "skills"];
 
 function hasUsableRect(rect) {
     return Boolean(rect && rect.width > 0 && rect.height > 0);
@@ -95,6 +95,13 @@ export default function FlyingBear() {
             return (
                 document.getElementById("research-bear-flight-target") ||
                 document.querySelector(".research-thinking-bear")
+            );
+        }
+
+        if (stage === "skills") {
+            return (
+                document.getElementById("skills-bear-flight-target") ||
+                document.querySelector(".skills-mascot-image")
             );
         }
 
@@ -192,6 +199,62 @@ export default function FlyingBear() {
         window.setTimeout(() => {
             if (orbit) orbit.style.opacity = "1";
         }, 150);
+    }
+
+    function getSkillsExplorerBear() {
+        return document.querySelector(".skills-mascot-wrap");
+    }
+
+    function hideSkillsExplorerBear() {
+        const bear = getSkillsExplorerBear();
+        if (!bear) return;
+
+        bear.style.transition = "opacity .22s ease, filter .22s ease";
+        bear.style.opacity = "0";
+        bear.style.filter = "blur(4px)";
+    }
+
+    function revealSkillsExplorerBear() {
+        const bear = getSkillsExplorerBear();
+        if (!bear) return;
+
+        const floating = bear.querySelector(".skills-mascot-float");
+
+        bear.style.transition = "none";
+        bear.style.opacity = "0";
+        bear.style.filter = "blur(10px)";
+
+        if (floating) {
+            floating.style.opacity = "0";
+            floating.style.filter = "brightness(1.55) saturate(1.12)";
+            floating.style.scale = ".78";
+        }
+
+        window.setTimeout(() => {
+            bear.style.transition =
+                "opacity .72s cubic-bezier(.22, 1, .36, 1), filter .82s ease";
+            bear.style.opacity = "1";
+            bear.style.filter = "blur(0px)";
+
+            if (!floating) return;
+
+            floating.style.transition =
+                "opacity .72s ease, filter .9s ease, scale .9s cubic-bezier(.22, 1, .36, 1)";
+            floating.style.opacity = "1";
+            floating.style.filter = "brightness(1) saturate(1)";
+            floating.style.scale = "1.06";
+
+            window.setTimeout(() => {
+                floating.style.scale = "1";
+            }, 560);
+
+            window.setTimeout(() => {
+                floating.style.transition = "";
+                floating.style.opacity = "";
+                floating.style.filter = "";
+                floating.style.scale = "";
+            }, 1050);
+        }, 155);
     }
 
     function spawnTrailParticle(x, y) {
@@ -436,7 +499,184 @@ export default function FlyingBear() {
         });
     }
 
+    function spawnSkillsBurst(x, y) {
+        const particles = [
+            { angle: -168, distance: 118, size: 5 },
+            { angle: -145, distance: 152, size: 6 },
+            { angle: -118, distance: 104, size: 4 },
+            { angle: -92, distance: 142, size: 6 },
+            { angle: -66, distance: 112, size: 5 },
+            { angle: -38, distance: 158, size: 4 },
+            { angle: -12, distance: 126, size: 6 },
+            { angle: 16, distance: 150, size: 5 },
+            { angle: 44, distance: 116, size: 4 },
+            { angle: 72, distance: 146, size: 6 },
+            { angle: 102, distance: 122, size: 5 },
+            { angle: 132, distance: 154, size: 4 },
+            { angle: 158, distance: 110, size: 6 },
+        ];
+
+        // Central activation flash.
+        const flash = document.createElement("span");
+        flash.style.cssText = `
+            position: fixed;
+            left: ${x}px;
+            top: ${y}px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1002;
+            opacity: .96;
+            transform: translate(-50%, -50%) scale(.45);
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(255,255,255,.96) 0%,
+                    color-mix(in srgb, var(--primary) 72%, white 28%) 18%,
+                    color-mix(in srgb, var(--primary) 34%, transparent) 42%,
+                    transparent 72%
+                );
+            box-shadow:
+                0 0 24px color-mix(in srgb, var(--primary) 72%, transparent),
+                0 0 62px color-mix(in srgb, var(--primary) 42%, transparent),
+                0 0 110px color-mix(in srgb, var(--primary) 20%, transparent);
+            transition:
+                width 1s cubic-bezier(.22, 1, .36, 1),
+                height 1s cubic-bezier(.22, 1, .36, 1),
+                transform 1s cubic-bezier(.22, 1, .36, 1),
+                opacity 1.05s ease;
+        `;
+
+        document.body.appendChild(flash);
+
+        requestAnimationFrame(() => {
+            flash.style.width = "178px";
+            flash.style.height = "178px";
+            flash.style.transform = "translate(-50%, -50%) scale(1)";
+            flash.style.opacity = "0";
+        });
+
+        window.setTimeout(() => flash.remove(), 1150);
+
+        // Wider, slower particles so the landing is readable while scrolling.
+        particles.forEach(({ angle, distance, size }, index) => {
+            const particle = document.createElement("span");
+            const radians = (angle * Math.PI) / 180;
+            const dx = Math.cos(radians) * distance;
+            const dy = Math.sin(radians) * distance;
+            const duration = 980 + (index % 4) * 70;
+
+            particle.style.cssText = `
+                position: fixed;
+                left: ${x}px;
+                top: ${y}px;
+                width: ${size}px;
+                height: ${size}px;
+                border-radius: 999px;
+                background: var(--primary);
+                box-shadow:
+                    0 0 12px color-mix(in srgb, var(--primary) 78%, transparent),
+                    0 0 28px color-mix(in srgb, var(--primary) 34%, transparent);
+                opacity: .96;
+                pointer-events: none;
+                z-index: 1001;
+                transform: translate(-50%, -50%) scale(.9);
+                transition:
+                    transform ${duration}ms cubic-bezier(.22, 1, .36, 1),
+                    opacity ${duration}ms ease;
+            `;
+
+            document.body.appendChild(particle);
+
+            window.setTimeout(() => {
+                requestAnimationFrame(() => {
+                    particle.style.transform = `
+                        translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))
+                        scale(.16)
+                    `;
+                    particle.style.opacity = "0";
+                });
+            }, 35 + index * 12);
+
+            window.setTimeout(
+                () => particle.remove(),
+                duration + 180 + index * 12
+            );
+        });
+
+        // Three large holographic activation waves.
+        const rings = [
+            { start: 42, end: 145, duration: 1020, opacity: .76, delay: 0 },
+            { start: 58, end: 205, duration: 1160, opacity: .58, delay: 80 },
+            { start: 74, end: 268, duration: 1280, opacity: .4, delay: 165 },
+        ];
+
+        rings.forEach(({ start, end, duration, opacity, delay }) => {
+            const ring = document.createElement("span");
+
+            ring.style.cssText = `
+                position: fixed;
+                left: ${x}px;
+                top: ${y}px;
+                width: ${start}px;
+                height: ${start}px;
+                border-radius: 50%;
+                border: 1px solid
+                    color-mix(in srgb, var(--primary) 58%, transparent);
+                box-shadow:
+                    0 0 18px color-mix(in srgb, var(--primary) 26%, transparent),
+                    inset 0 0 20px color-mix(in srgb, var(--primary) 10%, transparent);
+                opacity: 0;
+                pointer-events: none;
+                z-index: 1000;
+                transform: translate(-50%, -50%) scale(.72);
+                transition:
+                    width ${duration}ms cubic-bezier(.22, 1, .36, 1),
+                    height ${duration}ms cubic-bezier(.22, 1, .36, 1),
+                    opacity ${duration}ms ease,
+                    transform ${duration}ms cubic-bezier(.22, 1, .36, 1);
+            `;
+
+            document.body.appendChild(ring);
+
+            window.setTimeout(() => {
+                ring.style.opacity = `${opacity}`;
+
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        ring.style.width = `${end}px`;
+                        ring.style.height = `${end}px`;
+                        ring.style.opacity = "0";
+                        ring.style.transform =
+                            "translate(-50%, -50%) scale(1)";
+                    });
+                });
+            }, delay);
+
+            window.setTimeout(
+                () => ring.remove(),
+                duration + delay + 180
+            );
+        });
+    }
+
     function showStageVisual(stage) {
+        if (stage === "skills") {
+            const target = getStageElement("skills");
+            const rect = target?.getBoundingClientRect();
+
+            if (hasUsableRect(rect)) {
+                spawnSkillsBurst(
+                    rect.left + rect.width / 2,
+                    rect.top + rect.height * 0.36
+                );
+            }
+
+            revealSkillsExplorerBear();
+            return;
+        }
+
         if (stage === "research") {
             const target = getStageElement("research");
             const rect = target?.getBoundingClientRect();
@@ -491,6 +731,11 @@ export default function FlyingBear() {
     }
 
     function hideStageVisual(stage) {
+        if (stage === "skills") {
+            hideSkillsExplorerBear();
+            return;
+        }
+
         if (stage === "research") {
             hideResearchThinkingBear();
             return;
@@ -523,12 +768,14 @@ export default function FlyingBear() {
         const experienceSection = document.getElementById("experience");
         const projectsSection = document.getElementById("projects");
         const researchSection = document.getElementById("research");
+        const skillsSection = document.getElementById("skills");
 
         if (
             !aboutSection ||
             !experienceSection ||
             !projectsSection ||
-            !researchSection
+            !researchSection ||
+            !skillsSection
         ) {
             return position.current;
         }
@@ -538,12 +785,14 @@ export default function FlyingBear() {
         const experienceTop = experienceSection.getBoundingClientRect().top;
         const projectsTop = projectsSection.getBoundingClientRect().top;
         const researchTop = researchSection.getBoundingClientRect().top;
+        const skillsTop = skillsSection.getBoundingClientRect().top;
 
         if (aboutTop > stageLine) return "hero";
         if (experienceTop > stageLine) return "about";
         if (projectsTop > stageLine) return "experience";
         if (researchTop > stageLine) return "projects";
-        return "research";
+        if (skillsTop > stageLine) return "research";
+        return "skills";
     }
 
     function syncToViewport() {
@@ -614,14 +863,18 @@ export default function FlyingBear() {
         const startX = startRect.left;
         const startY = startRect.top;
         const startWidth = startRect.width;
+        const isSkillsTransition =
+            fromStage === "skills" || targetStage === "skills";
         const isResearchTransition =
             fromStage === "research" || targetStage === "research";
 
-        const arcHeight = isResearchTransition
-            ? 205
-            : fromStage === "projects" || targetStage === "projects"
-                ? 185
-                : 150;
+        const arcHeight = isSkillsTransition
+            ? 165
+            : isResearchTransition
+                ? 205
+                : fromStage === "projects" || targetStage === "projects"
+                    ? 185
+                    : 150;
 
         let poseSwapped = false;
         const startTime = performance.now();
@@ -717,11 +970,15 @@ export default function FlyingBear() {
         const experienceSection = document.getElementById("experience");
         const projectsSection = document.getElementById("projects");
         const researchSection = document.getElementById("research");
+        const skillsSection = document.getElementById("skills");
         const projectsTarget = document.getElementById(
             "projects-bear-flight-target"
         );
         const researchTarget = document.getElementById(
             "research-bear-flight-target"
+        );
+        const skillsTarget = document.getElementById(
+            "skills-bear-flight-target"
         );
 
         if (
@@ -729,8 +986,10 @@ export default function FlyingBear() {
             !experienceSection ||
             !projectsSection ||
             !researchSection ||
+            !skillsSection ||
             !projectsTarget ||
-            !researchTarget
+            !researchTarget ||
+            !skillsTarget
         ) {
             if (DEBUG) {
                 console.log("[FlyingBear] sections/targets not found", {
@@ -738,8 +997,10 @@ export default function FlyingBear() {
                     experienceSection,
                     projectsSection,
                     researchSection,
+                    skillsSection,
                     projectsTarget,
                     researchTarget,
+                    skillsTarget,
                 });
             }
             return;
@@ -750,11 +1011,18 @@ export default function FlyingBear() {
         desiredPosition.current = initialStage;
 
         // Keep destination mascots visually consistent on refresh/deep scroll.
-        if (initialStage === "research") {
+        if (initialStage === "skills") {
+            hideProjectCodingBears();
+            hideResearchThinkingBear();
+            revealSkillsExplorerBear();
+        } else if (initialStage === "research") {
             hideProjectCodingBears();
             revealResearchThinkingBear();
+            hideSkillsExplorerBear();
         } else {
             hideResearchThinkingBear();
+            hideSkillsExplorerBear();
+
             if (initialStage === "projects") {
                 revealProjectCodingBears();
             }
