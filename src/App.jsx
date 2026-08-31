@@ -7,6 +7,7 @@ import Stats from "./components/Stats/Stats";
 import About from "./components/About/About";
 import Experience from "./components/Experience/Experience";
 import Projects from "./components/Projects/Projects";
+import Research from "./components/Research/Research";
 
 function App() {
   const [aboutRef, aboutVisible] = useScrollFade();
@@ -89,7 +90,7 @@ function App() {
 
         {/* Research */}
         <div ref={researchRef} className={`fade-section ${researchVisible ? "is-visible" : ""}`}>
-          {/* <Research /> */}
+          <Research />
         </div>
 
         {/* Skills */}

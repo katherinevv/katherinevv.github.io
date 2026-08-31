@@ -7,7 +7,7 @@ const DURATION = 900;
 const DEBUG = false;
 const STAGE_LINE = 0.52;
 
-const STAGES = ["hero", "about", "experience", "projects"];
+const STAGES = ["hero", "about", "experience", "projects", "research"];
 
 function hasUsableRect(rect) {
     return Boolean(rect && rect.width > 0 && rect.height > 0);
@@ -91,6 +91,13 @@ export default function FlyingBear() {
             return document.getElementById("projects-bear-flight-target");
         }
 
+        if (stage === "research") {
+            return (
+                document.getElementById("research-bear-flight-target") ||
+                document.querySelector(".research-thinking-bear")
+            );
+        }
+
         return null;
     }
 
@@ -121,6 +128,70 @@ export default function FlyingBear() {
                 });
             }, 45 + index * 85);
         });
+    }
+
+    function getResearchThinkingBear() {
+        return (
+            document.getElementById("research-bear-flight-target") ||
+            document.querySelector(".research-thinking-bear")
+        );
+    }
+
+    function hideResearchThinkingBear() {
+        const bear = getResearchThinkingBear();
+        if (!bear) return;
+
+        const thoughtTrail = bear.querySelector(".research-thought-trail");
+        const orbit = bear.querySelector(".research-bear-orbit");
+
+        bear.style.transition = "opacity .22s ease, filter .22s ease";
+        bear.style.opacity = "0";
+        bear.style.filter = "blur(4px)";
+
+        if (thoughtTrail) {
+            thoughtTrail.style.transition = "opacity .18s ease";
+            thoughtTrail.style.opacity = "0";
+        }
+
+        if (orbit) {
+            orbit.style.transition = "opacity .18s ease";
+            orbit.style.opacity = "0";
+        }
+    }
+
+    function revealResearchThinkingBear() {
+        const bear = getResearchThinkingBear();
+        if (!bear) return;
+
+        const thoughtTrail = bear.querySelector(".research-thought-trail");
+        const orbit = bear.querySelector(".research-bear-orbit");
+
+        bear.style.transition = "opacity .4s ease, filter .4s ease";
+        bear.style.opacity = "0";
+        bear.style.filter = "blur(5px)";
+
+        if (thoughtTrail) {
+            thoughtTrail.style.transition = "opacity .32s ease";
+            thoughtTrail.style.opacity = "0";
+        }
+
+        if (orbit) {
+            orbit.style.transition = "opacity .38s ease";
+            orbit.style.opacity = "0";
+        }
+
+        requestAnimationFrame(() => {
+            bear.style.opacity = "1";
+            bear.style.filter = "blur(0px)";
+        });
+
+        window.setTimeout(() => {
+            if (thoughtTrail) thoughtTrail.style.opacity = "1";
+        }, 90);
+
+        window.setTimeout(() => {
+            if (orbit) orbit.style.opacity = "1";
+        }, 150);
     }
 
     function spawnTrailParticle(x, y) {
@@ -259,7 +330,128 @@ export default function FlyingBear() {
         });
     }
 
+
+    function spawnResearchBurst(x, y) {
+        const burstItems = [
+            { angle: -160, distance: 48, size: 6 },
+            { angle: -126, distance: 60, size: 5 },
+            { angle: -92, distance: 54, size: 6 },
+            { angle: -52, distance: 62, size: 5 },
+            { angle: -12, distance: 52, size: 6 },
+            { angle: 28, distance: 64, size: 5 },
+            { angle: 70, distance: 56, size: 6 },
+            { angle: 112, distance: 62, size: 5 },
+            { angle: 148, distance: 52, size: 6 },
+        ];
+
+        burstItems.forEach(({ angle, distance, size }, index) => {
+            const particle = document.createElement("span");
+            const radians = (angle * Math.PI) / 180;
+            const dx = Math.cos(radians) * distance;
+            const dy = Math.sin(radians) * distance;
+
+            particle.style.cssText = `
+                position: fixed;
+                left: ${x}px;
+                top: ${y}px;
+                width: ${size}px;
+                height: ${size}px;
+                border-radius: 999px;
+                background: var(--primary);
+                box-shadow: 0 0 14px color-mix(in srgb, var(--primary) 68%, transparent);
+                opacity: .82;
+                pointer-events: none;
+                z-index: 1000;
+                transform: translate(-50%, -50%) scale(.72);
+                transition:
+                    transform .56s cubic-bezier(.22, 1, .36, 1),
+                    opacity .56s ease;
+            `;
+
+            document.body.appendChild(particle);
+
+            requestAnimationFrame(() => {
+                particle.style.transform = `
+                    translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))
+                    scale(.15)
+                `;
+                particle.style.opacity = "0";
+            });
+
+            window.setTimeout(() => particle.remove(), 620 + index * 5);
+        });
+
+        const concepts = [
+            { text: "AI", dx: -58, dy: -34, rotate: -7 },
+            { text: "SCAN", dx: 62, dy: -24, rotate: 7 },
+            { text: "Σ", dx: 8, dy: 56, rotate: 0 },
+        ];
+
+        concepts.forEach(({ text, dx, dy, rotate }, index) => {
+            const chip = document.createElement("span");
+            chip.textContent = text;
+
+            chip.style.cssText = `
+                position: fixed;
+                left: ${x}px;
+                top: ${y}px;
+                color: var(--primary);
+                font-size: ${text === "Σ" ? ".82rem" : ".62rem"};
+                font-weight: 850;
+                line-height: 1;
+                letter-spacing: ${text === "SCAN" ? ".06em" : "0"};
+                padding: .28rem .42rem;
+                border-radius: 9px;
+                background: color-mix(in srgb, var(--card) 78%, transparent);
+                border: 1px solid color-mix(in srgb, var(--primary) 24%, var(--border));
+                box-shadow: 0 8px 22px color-mix(in srgb, var(--primary) 14%, transparent);
+                backdrop-filter: blur(8px);
+                opacity: 0;
+                pointer-events: none;
+                z-index: 1001;
+                transform: translate(-50%, -50%) scale(.62);
+                transition:
+                    transform .64s cubic-bezier(.22, 1, .36, 1),
+                    opacity .3s ease;
+            `;
+
+            document.body.appendChild(chip);
+
+            window.setTimeout(() => {
+                requestAnimationFrame(() => {
+                    chip.style.opacity = "1";
+                    chip.style.transform = `
+                        translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))
+                        rotate(${rotate}deg)
+                        scale(1)
+                    `;
+                });
+            }, 30 + index * 45);
+
+            window.setTimeout(() => {
+                chip.style.opacity = "0";
+            }, 390 + index * 45);
+
+            window.setTimeout(() => chip.remove(), 760);
+        });
+    }
+
     function showStageVisual(stage) {
+        if (stage === "research") {
+            const target = getStageElement("research");
+            const rect = target?.getBoundingClientRect();
+
+            if (hasUsableRect(rect)) {
+                spawnResearchBurst(
+                    rect.left + rect.width / 2,
+                    rect.top + rect.height / 2
+                );
+            }
+
+            revealResearchThinkingBear();
+            return;
+        }
+
         if (stage === "projects") {
             const target = getStageElement("projects");
             const rect = target?.getBoundingClientRect();
@@ -299,6 +491,11 @@ export default function FlyingBear() {
     }
 
     function hideStageVisual(stage) {
+        if (stage === "research") {
+            hideResearchThinkingBear();
+            return;
+        }
+
         if (stage === "projects") {
             hideProjectCodingBears();
             return;
@@ -325,8 +522,14 @@ export default function FlyingBear() {
         const aboutSection = document.getElementById("about");
         const experienceSection = document.getElementById("experience");
         const projectsSection = document.getElementById("projects");
+        const researchSection = document.getElementById("research");
 
-        if (!aboutSection || !experienceSection || !projectsSection) {
+        if (
+            !aboutSection ||
+            !experienceSection ||
+            !projectsSection ||
+            !researchSection
+        ) {
             return position.current;
         }
 
@@ -334,11 +537,13 @@ export default function FlyingBear() {
         const aboutTop = aboutSection.getBoundingClientRect().top;
         const experienceTop = experienceSection.getBoundingClientRect().top;
         const projectsTop = projectsSection.getBoundingClientRect().top;
+        const researchTop = researchSection.getBoundingClientRect().top;
 
         if (aboutTop > stageLine) return "hero";
         if (experienceTop > stageLine) return "about";
         if (projectsTop > stageLine) return "experience";
-        return "projects";
+        if (researchTop > stageLine) return "projects";
+        return "research";
     }
 
     function syncToViewport() {
@@ -409,8 +614,12 @@ export default function FlyingBear() {
         const startX = startRect.left;
         const startY = startRect.top;
         const startWidth = startRect.width;
-        const arcHeight =
-            fromStage === "projects" || targetStage === "projects"
+        const isResearchTransition =
+            fromStage === "research" || targetStage === "research";
+
+        const arcHeight = isResearchTransition
+            ? 205
+            : fromStage === "projects" || targetStage === "projects"
                 ? 185
                 : 150;
 
@@ -507,22 +716,30 @@ export default function FlyingBear() {
         const aboutSection = document.getElementById("about");
         const experienceSection = document.getElementById("experience");
         const projectsSection = document.getElementById("projects");
+        const researchSection = document.getElementById("research");
         const projectsTarget = document.getElementById(
             "projects-bear-flight-target"
+        );
+        const researchTarget = document.getElementById(
+            "research-bear-flight-target"
         );
 
         if (
             !aboutSection ||
             !experienceSection ||
             !projectsSection ||
-            !projectsTarget
+            !researchSection ||
+            !projectsTarget ||
+            !researchTarget
         ) {
             if (DEBUG) {
                 console.log("[FlyingBear] sections/targets not found", {
                     aboutSection,
                     experienceSection,
                     projectsSection,
+                    researchSection,
                     projectsTarget,
+                    researchTarget,
                 });
             }
             return;
@@ -531,6 +748,17 @@ export default function FlyingBear() {
         const initialStage = getDesiredStage();
         position.current = initialStage;
         desiredPosition.current = initialStage;
+
+        // Keep destination mascots visually consistent on refresh/deep scroll.
+        if (initialStage === "research") {
+            hideProjectCodingBears();
+            revealResearchThinkingBear();
+        } else {
+            hideResearchThinkingBear();
+            if (initialStage === "projects") {
+                revealProjectCodingBears();
+            }
+        }
 
         syncViewportRef.current = syncToViewport;
         rememberExperienceBearPosition();

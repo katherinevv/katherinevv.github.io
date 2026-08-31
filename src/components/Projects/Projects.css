@@ -29,13 +29,36 @@
 }
 
 .projects-eyebrow {
-  display: inline-block;
-  font-size: .8rem;
-  font-weight: 700;
-  letter-spacing: .12em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+
+  font-size: .78rem;
+  font-weight: 800;
+  letter-spacing: .18em;
   text-transform: uppercase;
-  color: var(--text-secondary);
+  color: var(--primary);
+
+  white-space: nowrap;
   margin-bottom: 1rem;
+}
+
+.projects-eyebrow::before,
+.projects-eyebrow::after {
+  content: "";
+  width: clamp(42px, 7vw, 92px);
+  height: 1px;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--primary) 58%, transparent)
+  );
+}
+
+.projects-eyebrow::after {
+  transform: scaleX(-1);
 }
 
 .projects-heading {
