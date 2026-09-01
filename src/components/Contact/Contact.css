@@ -1348,7 +1348,7 @@ a.contact-item:hover .contact-item-arrow {
 
 /* CONTACT CURTAIN REVEAL — GSAP ScrollTrigger */
 .contact {
-  min-height: 148vh;
+  min-height: 100vh;
   padding: 0;
   overflow: visible;
 }
@@ -1489,10 +1489,6 @@ a.contact-item:hover .contact-item-arrow {
 }
 
 /* CONTACT DEPTH PASS — stronger curtain + dark bottom arc */
-.contact {
-  min-height: 162vh;
-}
-
 .contact-curtain {
   background:
     linear-gradient(
@@ -2345,7 +2341,7 @@ a.contact-item:hover .contact-item-arrow {
 /* RESPONSIVE */
 @media (max-width: 900px) {
   .contact {
-    min-height: 150vh;
+    min-height: 100vh;
   }
 
   .contact-curtain {
@@ -2633,7 +2629,6 @@ a.contact-item:hover .contact-item-arrow {
   }
 }
 
-
 /* REDUCED MOTION */
 @media (prefers-reduced-motion: reduce) {
   .contact {
@@ -2682,4 +2677,9 @@ a.contact-item:hover .contact-item-arrow {
     animation: none !important;
     transition: none !important;
   }
+}
+
+/* Prevent decorative overflow from creating extra page scroll */
+.contact {
+  overflow: clip;
 }

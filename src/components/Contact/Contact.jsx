@@ -1,4 +1,5 @@
 import "./Contact.css";
+import Footer from "../Footer/Footer";
 
 import { useLayoutEffect, useRef, useState } from "react";
 import { Mail, MapPin, Sparkles, ChevronDown, ExternalLink, Send } from "lucide-react";
@@ -269,7 +270,7 @@ export default function Contact() {
           };
         }
       );
-      
+
       mm.add(
         "(max-width: 768px), (prefers-reduced-motion: reduce)",
         () => {
@@ -537,6 +538,8 @@ export default function Contact() {
           </div>
         </div>
       </div>
+      
+      <Footer />
     </section>
   );
 }

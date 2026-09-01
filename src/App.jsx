@@ -100,12 +100,10 @@ function App() {
           <Skills />
         </div>
 
-        {/* Contact */}
+        {/* Contact + Footer */}
         <div ref={contactRef} className={`fade-section ${contactVisible ? "is-visible" : ""}`}>
           <Contact />
         </div>
-
-        {/* Footer */}
       </main>
     </>
   );
