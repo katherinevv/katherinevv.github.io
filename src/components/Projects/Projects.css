@@ -993,7 +993,7 @@
   font-size: 0.82rem;
   font-weight: 500;
   letter-spacing: 0.02em;
-  color: rgba(20, 28, 52, 0.62);
+  color: var(--text-secondary);
   white-space: nowrap;
 }
 
@@ -1293,7 +1293,7 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
 
-  color: rgba(40, 50, 75, 0.55);
+  color: color-mix(in srgb, var(--text) 55%, transparent);
 }
 
 .project-modal-links {
@@ -1726,7 +1726,7 @@
   }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 768px) {
   .projects-heading-shell {
     grid-template-columns: 72px minmax(0, 1fr) 72px;
     gap: .5rem;

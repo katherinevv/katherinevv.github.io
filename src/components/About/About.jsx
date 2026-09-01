@@ -3,7 +3,7 @@ import { GraduationCap, Briefcase, Sparkles } from "lucide-react";
 
 import BINUS from "../../assets/images/Logo/logo-BINUS.png";
 import AAB from "../../assets/images/Logo/logo-AAB.png";
-import Bear from "../../assets/images/Mascot/bear-waving.png";
+import BearWaving from "../../assets/images/Mascot/bear-waving.png";
 
 export default function About() {
     return (
@@ -119,7 +119,7 @@ export default function About() {
                                 <div className="about-card-watermark-glow"></div>
                                 <div className="about-card-shine"></div>
                             </div>
-                            <img src={Bear} alt="Kuroko mascot" className="about-bear" />
+                            <img src={BearWaving} alt="Kuroko mascot" className="about-bear" />
                         </div>
                     </div>
                 </div>

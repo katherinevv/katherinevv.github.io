@@ -1,9 +1,9 @@
 import "./Hero.css";
 import useNavbarHeight from "../../hooks/useNavbarHeight";
 
-import Profile from "../../assets/images/profile-3.png";
-import Bear from "../../assets/images/Mascot/bear-floating.png";
-import Resume from "../../assets/files/Katherine_Vanessa_Resume.pdf";
+import Profile from "../../assets/images/profile.png";
+import BearFloating from "../../assets/images/Mascot/bear-floating.png";
+import Resume from "../../assets/files/CV-Katherine_Vanessa.pdf";
 
 import { ArrowRight, Download, Mail } from "lucide-react";
 import { FaGithub, FaLinkedin, FaInstagram } from "react-icons/fa6";
@@ -20,7 +20,7 @@ export default function Hero() {
                 <div className="hero-left">
                     <div className="hero-badge-row">
                         <div className="hero-badge"> ✦ OPEN TO OPPORTUNITIES ✦ </div>
-                        <img src={Bear} alt="Kuroko mascot" className="hero-bear" />
+                        <img src={BearFloating} alt="Kuroko mascot" className="hero-bear" />
                     </div>
 
                     <h2 className="hero-tagline"> BRIDGING BUSINESS AND TECHNOLOGY </h2>

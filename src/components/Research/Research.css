@@ -2295,7 +2295,6 @@
 }
 
 /* RESPONSIVE */
-/* Tablet / small desktop */
 @media (max-width: 900px) {
   .research-card {
     grid-template-columns: 1fr;
@@ -2433,7 +2432,6 @@
   }
 }
 
-/* Tablet portrait / large mobile */
 @media (max-width: 768px) {
   .research {
     padding: 4.5rem 0;
@@ -2570,7 +2568,6 @@
   }
 }
 
-/* Mobile */
 @media (max-width: 640px) {
   .research-eyebrow-row {
     gap: .65rem;
@@ -2812,7 +2809,6 @@
   }
 }
 
-/* Small mobile: stack only when two columns genuinely become too tight */
 @media (max-width: 420px) {
   .research-heading {
     font-size: clamp(1.35rem, 7vw, 1.6rem);

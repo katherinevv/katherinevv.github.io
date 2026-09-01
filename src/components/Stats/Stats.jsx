@@ -4,7 +4,7 @@ const STATS = [
     { value: "1 Year", label: "Intern Experience" },
     { value: "3.78", label: "/ 4.00 CGPA" },
     { value: "2", label: "Academic Works" },
-    { value: "6+", label: "Projects" },
+    { value: "15", label: "Projects" },
 ];
 
 export default function Stats() {
