@@ -2,7 +2,7 @@ import "./Hero.css";
 import useNavbarHeight from "../../hooks/useNavbarHeight";
 
 import Profile from "../../assets/images/profile.png";
-import BearFloating from "../../assets/images/Mascot/bear-floating.png";
+import BearFloating from "../../assets/images/mascot/bear-floating.png";
 import Resume from "../../assets/files/CV-Katherine_Vanessa.pdf";
 
 import { ArrowRight, Download, Mail } from "lucide-react";

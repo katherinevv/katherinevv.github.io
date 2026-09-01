@@ -22,7 +22,7 @@ import {
   X,
 } from "lucide-react";
 
-import BearThinking from "../../assets/images/Mascot/bear-thinking.png";
+import BearThinking from "../../assets/images/mascot/bear-thinking.png";
 
 const RESEARCH_ITEMS = [
   {

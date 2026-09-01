@@ -7,7 +7,7 @@ import { FaGithub, FaLinkedin, FaInstagram } from "react-icons/fa6";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-import BearStanding from "../../assets/images/Mascot/bear-standing.png";
+import BearStanding from "../../assets/images/mascot/bear-standing.png";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);

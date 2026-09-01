@@ -4,7 +4,7 @@ import { SKILL_CATEGORIES } from "./data";
 import { useMemo, useState } from "react";
 import { Sparkles } from "lucide-react";
 
-import BearExplore from "../../assets/images/Mascot/bear-explore.png";
+import BearExplore from "../../assets/images/mascot/bear-explore.png";
 
 function SkillIcon({ skill, size = 28 }) {
   if (skill.iconSrc) {
