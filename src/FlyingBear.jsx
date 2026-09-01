@@ -7,7 +7,7 @@ const DURATION = 900;
 const DEBUG = false;
 const STAGE_LINE = 0.52;
 
-const STAGES = ["hero", "about", "experience", "projects", "research", "skills"];
+const STAGES = ["hero", "about", "experience", "projects", "research", "skills", "contact"];
 
 function hasUsableRect(rect) {
     return Boolean(rect && rect.width > 0 && rect.height > 0);
@@ -102,6 +102,13 @@ export default function FlyingBear() {
             return (
                 document.getElementById("skills-bear-flight-target") ||
                 document.querySelector(".skills-mascot-image")
+            );
+        }
+
+        if (stage === "contact") {
+            return (
+                document.getElementById("contact-bear-flight-target") ||
+                document.querySelector(".contact-mascot-image")
             );
         }
 
@@ -255,6 +262,240 @@ export default function FlyingBear() {
                 floating.style.scale = "";
             }, 1050);
         }, 155);
+    }
+
+    function getContactStandingBear() {
+        return document.querySelector(".contact-mascot-float");
+    }
+
+    function getContactGroundShadow() {
+        return document.querySelector(".contact-mascot-ground-shadow");
+    }
+
+    function hideContactStandingBear() {
+        const bear = getContactStandingBear();
+        const shadow = getContactGroundShadow();
+
+        if (bear) {
+            bear.style.transition = "opacity .22s ease, filter .22s ease";
+            bear.style.opacity = "0";
+            bear.style.filter = "blur(5px) brightness(1.18)";
+        }
+
+        if (shadow) {
+            // The shadow has its own CSS opacity animation, so temporarily
+            // disable that animation while the destination mascot is hidden.
+            shadow.style.animation = "none";
+            shadow.style.transition = "opacity .2s ease, filter .2s ease";
+            shadow.style.opacity = "0";
+            shadow.style.filter = "blur(11px)";
+        }
+    }
+
+    function revealContactStandingBear() {
+        const bear = getContactStandingBear();
+        const shadow = getContactGroundShadow();
+
+        if (!bear) return;
+
+        bear.style.transition = "none";
+        bear.style.opacity = "0";
+        bear.style.filter = "blur(10px) brightness(1.38)";
+        bear.style.scale = ".84";
+
+        if (shadow) {
+            shadow.style.animation = "none";
+            shadow.style.transition = "none";
+            shadow.style.opacity = "0";
+            shadow.style.filter = "blur(12px)";
+        }
+
+        window.setTimeout(() => {
+            bear.style.transition =
+                "opacity .68s cubic-bezier(.22, 1, .36, 1), filter .82s ease, scale .86s cubic-bezier(.22, 1, .36, 1)";
+            bear.style.opacity = "1";
+            bear.style.filter = "blur(0px) brightness(1)";
+            bear.style.scale = "1.055";
+
+            if (shadow) {
+                shadow.style.transition =
+                    "opacity .72s ease, filter .72s ease";
+                shadow.style.opacity = ".48";
+                shadow.style.filter = "blur(8px)";
+            }
+
+            window.setTimeout(() => {
+                bear.style.scale = "1";
+            }, 520);
+
+            window.setTimeout(() => {
+                bear.style.transition = "";
+                bear.style.opacity = "";
+                bear.style.filter = "";
+                bear.style.scale = "";
+
+                if (shadow) {
+                    shadow.style.transition = "";
+                    shadow.style.opacity = "";
+                    shadow.style.filter = "";
+                    shadow.style.animation = "";
+                }
+            }, 1080);
+        }, 135);
+    }
+
+    function spawnContactArrival(x, y) {
+        const flash = document.createElement("span");
+
+        flash.style.cssText = `
+            position: fixed;
+            left: ${x}px;
+            top: ${y}px;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1002;
+            opacity: .9;
+            transform: translate(-50%, -50%) scale(.5);
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(255,255,255,.92) 0%,
+                    color-mix(in srgb, var(--primary) 62%, white 38%) 16%,
+                    color-mix(in srgb, var(--primary) 22%, transparent) 44%,
+                    transparent 72%
+                );
+            box-shadow:
+                0 0 24px color-mix(in srgb, var(--primary) 54%, transparent),
+                0 0 70px color-mix(in srgb, var(--primary) 24%, transparent);
+            transition:
+                width .88s cubic-bezier(.22, 1, .36, 1),
+                height .88s cubic-bezier(.22, 1, .36, 1),
+                transform .88s cubic-bezier(.22, 1, .36, 1),
+                opacity .9s ease;
+        `;
+
+        document.body.appendChild(flash);
+
+        requestAnimationFrame(() => {
+            flash.style.width = "154px";
+            flash.style.height = "154px";
+            flash.style.transform = "translate(-50%, -50%) scale(1)";
+            flash.style.opacity = "0";
+        });
+
+        window.setTimeout(() => flash.remove(), 980);
+
+        const rings = [
+            { start: 42, end: 124, duration: 880, delay: 0, opacity: .66 },
+            { start: 56, end: 176, duration: 1040, delay: 75, opacity: .46 },
+            { start: 72, end: 228, duration: 1160, delay: 150, opacity: .28 },
+        ];
+
+        rings.forEach(({ start, end, duration, delay, opacity }) => {
+            const ring = document.createElement("span");
+
+            ring.style.cssText = `
+                position: fixed;
+                left: ${x}px;
+                top: ${y}px;
+                width: ${start}px;
+                height: ${start}px;
+                border-radius: 50%;
+                border: 1px solid
+                    color-mix(in srgb, var(--primary) 52%, transparent);
+                box-shadow:
+                    0 0 20px color-mix(in srgb, var(--primary) 18%, transparent);
+                opacity: 0;
+                pointer-events: none;
+                z-index: 1000;
+                transform: translate(-50%, -50%) scale(.76);
+                transition:
+                    width ${duration}ms cubic-bezier(.22, 1, .36, 1),
+                    height ${duration}ms cubic-bezier(.22, 1, .36, 1),
+                    transform ${duration}ms cubic-bezier(.22, 1, .36, 1),
+                    opacity ${duration}ms ease;
+            `;
+
+            document.body.appendChild(ring);
+
+            window.setTimeout(() => {
+                ring.style.opacity = `${opacity}`;
+
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        ring.style.width = `${end}px`;
+                        ring.style.height = `${end}px`;
+                        ring.style.transform =
+                            "translate(-50%, -50%) scale(1)";
+                        ring.style.opacity = "0";
+                    });
+                });
+            }, delay);
+
+            window.setTimeout(
+                () => ring.remove(),
+                duration + delay + 160
+            );
+        });
+
+        const particles = [
+            { angle: -160, distance: 92, size: 5 },
+            { angle: -126, distance: 108, size: 4 },
+            { angle: -92, distance: 118, size: 5 },
+            { angle: -54, distance: 104, size: 4 },
+            { angle: -18, distance: 116, size: 5 },
+            { angle: 22, distance: 104, size: 4 },
+            { angle: 58, distance: 116, size: 5 },
+            { angle: 96, distance: 106, size: 4 },
+            { angle: 132, distance: 114, size: 5 },
+            { angle: 166, distance: 96, size: 4 },
+        ];
+
+        particles.forEach(({ angle, distance, size }, index) => {
+            const particle = document.createElement("span");
+            const radians = (angle * Math.PI) / 180;
+            const dx = Math.cos(radians) * distance;
+            const dy = Math.sin(radians) * distance;
+            const duration = 760 + (index % 3) * 80;
+
+            particle.style.cssText = `
+                position: fixed;
+                left: ${x}px;
+                top: ${y}px;
+                width: ${size}px;
+                height: ${size}px;
+                border-radius: ${index % 2 === 0 ? "50%" : "3px"};
+                background: var(--primary);
+                box-shadow:
+                    0 0 13px color-mix(in srgb, var(--primary) 48%, transparent);
+                opacity: .82;
+                pointer-events: none;
+                z-index: 1001;
+                transform: translate(-50%, -50%) scale(.8);
+                transition:
+                    transform ${duration}ms cubic-bezier(.22, 1, .36, 1),
+                    opacity ${duration}ms ease;
+            `;
+
+            document.body.appendChild(particle);
+
+            window.setTimeout(() => {
+                requestAnimationFrame(() => {
+                    particle.style.transform = `
+                        translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))
+                        scale(.2)
+                    `;
+                    particle.style.opacity = "0";
+                });
+            }, 25 + index * 12);
+
+            window.setTimeout(
+                () => particle.remove(),
+                duration + 170 + index * 12
+            );
+        });
     }
 
     function spawnTrailParticle(x, y) {
@@ -662,6 +903,21 @@ export default function FlyingBear() {
     }
 
     function showStageVisual(stage) {
+        if (stage === "contact") {
+            const target = getStageElement("contact");
+            const rect = target?.getBoundingClientRect();
+
+            if (hasUsableRect(rect)) {
+                spawnContactArrival(
+                    rect.left + rect.width / 2,
+                    rect.top + rect.height * 0.46
+                );
+            }
+
+            revealContactStandingBear();
+            return;
+        }
+
         if (stage === "skills") {
             const target = getStageElement("skills");
             const rect = target?.getBoundingClientRect();
@@ -731,6 +987,11 @@ export default function FlyingBear() {
     }
 
     function hideStageVisual(stage) {
+        if (stage === "contact") {
+            hideContactStandingBear();
+            return;
+        }
+
         if (stage === "skills") {
             hideSkillsExplorerBear();
             return;
@@ -769,13 +1030,15 @@ export default function FlyingBear() {
         const projectsSection = document.getElementById("projects");
         const researchSection = document.getElementById("research");
         const skillsSection = document.getElementById("skills");
+        const contactSection = document.getElementById("contact");
 
         if (
             !aboutSection ||
             !experienceSection ||
             !projectsSection ||
             !researchSection ||
-            !skillsSection
+            !skillsSection ||
+            !contactSection
         ) {
             return position.current;
         }
@@ -786,13 +1049,15 @@ export default function FlyingBear() {
         const projectsTop = projectsSection.getBoundingClientRect().top;
         const researchTop = researchSection.getBoundingClientRect().top;
         const skillsTop = skillsSection.getBoundingClientRect().top;
+        const contactTop = contactSection.getBoundingClientRect().top;
 
         if (aboutTop > stageLine) return "hero";
         if (experienceTop > stageLine) return "about";
         if (projectsTop > stageLine) return "experience";
         if (researchTop > stageLine) return "projects";
         if (skillsTop > stageLine) return "research";
-        return "skills";
+        if (contactTop > stageLine) return "skills";
+        return "contact";
     }
 
     function syncToViewport() {
@@ -863,25 +1128,33 @@ export default function FlyingBear() {
         const startX = startRect.left;
         const startY = startRect.top;
         const startWidth = startRect.width;
+        const isContactTransition =
+            fromStage === "contact" || targetStage === "contact";
         const isSkillsTransition =
             fromStage === "skills" || targetStage === "skills";
         const isResearchTransition =
             fromStage === "research" || targetStage === "research";
 
-        const arcHeight = isSkillsTransition
-            ? 165
-            : isResearchTransition
-                ? 205
-                : fromStage === "projects" || targetStage === "projects"
-                    ? 185
-                    : 150;
+        const arcHeight = isContactTransition
+            ? 182
+            : isSkillsTransition
+                ? 165
+                : isResearchTransition
+                    ? 205
+                    : fromStage === "projects" || targetStage === "projects"
+                        ? 185
+                        : 150;
+
+        const flightDuration = isContactTransition
+            ? 1040
+            : DURATION;
 
         let poseSwapped = false;
         const startTime = performance.now();
         lastFrameTime.current = startTime;
 
         function step(now) {
-            const t = Math.min((now - startTime) / DURATION, 1);
+            const t = Math.min((now - startTime) / flightDuration, 1);
             const ease =
                 t < 0.5
                     ? 2 * t * t
@@ -971,6 +1244,7 @@ export default function FlyingBear() {
         const projectsSection = document.getElementById("projects");
         const researchSection = document.getElementById("research");
         const skillsSection = document.getElementById("skills");
+        const contactSection = document.getElementById("contact");
         const projectsTarget = document.getElementById(
             "projects-bear-flight-target"
         );
@@ -980,6 +1254,9 @@ export default function FlyingBear() {
         const skillsTarget = document.getElementById(
             "skills-bear-flight-target"
         );
+        const contactTarget = document.getElementById(
+            "contact-bear-flight-target"
+        );
 
         if (
             !aboutSection ||
@@ -987,9 +1264,11 @@ export default function FlyingBear() {
             !projectsSection ||
             !researchSection ||
             !skillsSection ||
+            !contactSection ||
             !projectsTarget ||
             !researchTarget ||
-            !skillsTarget
+            !skillsTarget ||
+            !contactTarget
         ) {
             if (DEBUG) {
                 console.log("[FlyingBear] sections/targets not found", {
@@ -998,9 +1277,11 @@ export default function FlyingBear() {
                     projectsSection,
                     researchSection,
                     skillsSection,
+                    contactSection,
                     projectsTarget,
                     researchTarget,
                     skillsTarget,
+                    contactTarget,
                 });
             }
             return;
@@ -1011,17 +1292,25 @@ export default function FlyingBear() {
         desiredPosition.current = initialStage;
 
         // Keep destination mascots visually consistent on refresh/deep scroll.
-        if (initialStage === "skills") {
+        if (initialStage === "contact") {
+            hideProjectCodingBears();
+            hideResearchThinkingBear();
+            hideSkillsExplorerBear();
+            revealContactStandingBear();
+        } else if (initialStage === "skills") {
             hideProjectCodingBears();
             hideResearchThinkingBear();
             revealSkillsExplorerBear();
+            hideContactStandingBear();
         } else if (initialStage === "research") {
             hideProjectCodingBears();
             revealResearchThinkingBear();
             hideSkillsExplorerBear();
+            hideContactStandingBear();
         } else {
             hideResearchThinkingBear();
             hideSkillsExplorerBear();
+            hideContactStandingBear();
 
             if (initialStage === "projects") {
                 revealProjectCodingBears();
