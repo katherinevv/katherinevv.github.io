@@ -5,7 +5,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { createPortal } from "react-dom";
 import { FiCalendar } from "react-icons/fi";
 
-import BearCoding from "../../assets/images/Mascot/bear-coding.png";
+import BearCoding from "../../assets/images/mascot/bear-coding.png";
 
 const FILTERS = ["All", "Professional", "Web", "Mobile", "API & Backend", "UI/UX"];
 

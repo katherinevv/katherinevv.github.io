@@ -5,8 +5,8 @@ import { ChevronDown, Calendar } from "lucide-react";
 
 import AABLogo from "../../assets/images/Logo/logo-AAB.png";
 import AABBuilding from "../../assets/images/Logo/company-AAB.png";
-import BearWalking from "../../assets/images/Mascot/bear-walking.png";
-import BearFace from "../../assets/images/Mascot/bear-face.png";
+import BearWalking from "../../assets/images/mascot/bear-walking.png";
+import BearFace from "../../assets/images/mascot/bear-face.png";
 
 const EXPERIENCES = [
     {

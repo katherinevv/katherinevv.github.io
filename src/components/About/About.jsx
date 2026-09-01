@@ -3,7 +3,7 @@ import { GraduationCap, Briefcase, Sparkles } from "lucide-react";
 
 import BINUS from "../../assets/images/Logo/logo-BINUS.png";
 import AAB from "../../assets/images/Logo/logo-AAB.png";
-import BearWaving from "../../assets/images/Mascot/bear-waving.png";
+import BearWaving from "../../assets/images/mascot/bear-waving.png";
 
 export default function About() {
     return (
