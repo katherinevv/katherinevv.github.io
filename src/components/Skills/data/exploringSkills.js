@@ -1,5 +1,5 @@
 import { SiReact, SiSap, SiVite } from "react-icons/si";
-import PowerBiLogo from "../../../assets/icons/skills/Power-BI.png";
+import PowerBiLogo from "../../../assets/icons/Skills/Power-BI.png";
 
 export const exploringCategory = {
   id: "exploring",

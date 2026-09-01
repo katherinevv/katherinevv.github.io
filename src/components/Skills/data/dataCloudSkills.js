@@ -1,6 +1,6 @@
 import { Database } from "lucide-react";
 import { SiDbeaver, SiFirebase, SiMysql, SiPostgresql } from "react-icons/si";
-import SQLServerLogo from "../../../assets/icons/skills/SQL-Server.png";
+import SQLServerLogo from "../../../assets/icons/Skills/SQL-Server.png";
 import PhpMyAdminLogo from "../../../assets/icons/Skills/PhpMyAdmin.png";
 
 export const dataCloudCategory = {
